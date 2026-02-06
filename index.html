@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para mi Amor Eterno ❤️</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --rosa-claro: #ffe4e9;
+            --rosa-medio: #ff99ac;
+            --rojo-amor: #ff5d6c;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: var(--rosa-claro);
+            margin: 0;
+            overflow: hidden;
+            user-select: none;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .font-titulo { font-family: 'Fredoka One', cursive; }
+
+        /* Cuadrícula tipo libreta */
+        .bg-grid {
+            background-image: radial-gradient(#e5e5e5 1px, transparent 1px), 
+                              linear-gradient(#f0f0f0 1px, transparent 1px), 
+                              linear-gradient(90deg, #f0f0f0 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        /* Animaciones */
+        @keyframes heartBeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); } }
+        .animate-titulo { animation: heartBeat 2s infinite ease-in-out; }
+
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        
+        /* Corazones */
+        .heart-fall { position: absolute; color: var(--rojo-amor); pointer-events: none; z-index: 5; animation: fall linear forwards; top: -5vh; }
+        @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
+
+        .heart-float { position: absolute; color: var(--rojo-amor); pointer-events: none; z-index: 5; animation: floatUp linear forwards; bottom: -5vh; }
+        @keyframes floatUp { 0% { transform: translateY(0) rotate(0deg); opacity: 0; } 10% { opacity: 0.6; } 90% { opacity: 0.6; } 100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; } }
+
+        /* Estructura de Slides */
+        .slide { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: opacity 0.8s ease-in-out, visibility 0.8s; z-index: 10; padding: 1rem; }
+        .slide.active { opacity: 1; visibility: visible; z-index: 20; }
+
+        /* Timeline Items */
+        .timeline-item { opacity: 0; transition: all 0.6s ease-out; }
+        .active .timeline-item { opacity: 1; }
+
+        /* Razones */
+        .razon-item { opacity: 0; transform: scale(0.95); transition: all 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .active .razon-item { opacity: 1; transform: scale(1); }
+
+        /* Marcos de imagen punteados */
+        .image-placeholder { 
+            background: #fff; 
+            border: 3px dashed var(--rosa-medio); 
+            border-radius: 15px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            color: #ccc; 
+            overflow: hidden; 
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05); 
+        }
+
+        .nav-btn { z-index: 100; background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(4px); border: 2px solid var(--rosa-medio); transition: all 0.3s; }
+        .nav-btn:hover { background: white; color: var(--rojo-amor); transform: scale(1.1); }
+
+        .modal-overlay { background: rgba(0,0,0,0.5); backdrop-filter: blur(3px); display: none; z-index: 300; }
+        .modal-overlay.active { display: flex; }
+
+        /* Overlay de Inicio */
+        #start-overlay {
+            position: fixed;
+            inset: 0;
+            background: var(--rosa-claro);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: opacity 1s ease;
+        }
+    </style>
+</head>
+<body class="bg-grid">
+
+    <!-- Pantalla de Inicio para activar Audio -->
+    <div id="start-overlay" onclick="startExperience()">
+        <div class="text-center animate-titulo">
+            <div class="text-8xl mb-6">🎁</div>
+            <h2 class="font-titulo text-3xl text-[#ff5d6c] mb-4 uppercase tracking-tighter">Tienes un regalo</h2>
+            <p class="text-pink-500 font-semibold italic">Haz clic para abrirlo...</p>
+        </div>
+    </div>
+
+    <div id="hearts-container" class="fixed inset-0 pointer-events-none"></div>
+
+    <!-- Navegación -->
+    <button onclick="prevSlide()" class="nav-btn fixed left-4 top-1/2 -translate-y-1/2 p-3 rounded-full shadow-lg">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+    </button>
+    <button onclick="nextSlide()" class="nav-btn fixed right-4 top-1/2 -translate-y-1/2 p-3 rounded-full shadow-lg">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+    </button>
+
+    <div id="slider" class="w-full h-full">
+        <!-- 1. PORTADA -->
+        <section class="slide active">
+            <div class="text-center animate-titulo">
+                <h2 class="text-2xl text-red-400 font-titulo uppercase tracking-widest">Nuestra</h2>
+                <h1 class="text-7xl md:text-9xl text-white font-titulo drop-shadow-lg" style="-webkit-text-stroke: 3px #ff5d6c;">HISTORIA</h1>
+                <div class="bg-[#ff5d6c] text-white px-8 py-2 rounded-full inline-block mt-4 font-titulo text-2xl shadow-lg">DE AMOR</div>
+            </div>
+            <p class="mt-12 text-pink-400 font-semibold animate-bounce italic">Para el hombre de mi vida ❤️</p>
+        </section>
+
+        <!-- 2. DONDE TODO COMENZÓ -->
+        <section class="slide bg-grid">
+            <div class="flex flex-col md:flex-row items-center justify-center gap-10 max-w-6xl w-full px-6">
+                <div class="w-64 md:w-80 aspect-[3/4] image-placeholder border-[10px] border-white flex-shrink-0 shadow-xl !border-dashed">
+                    <span class="text-center p-4">Foto de la Prepa</span>
+                </div>
+                <div class="text-center md:text-left">
+                    <h2 class="text-4xl md:text-6xl font-titulo text-[#ff5d6c] mb-6 animate-titulo uppercase italic">Donde todo comenzó</h2>
+                    <p class="text-lg md:text-xl text-gray-700 leading-relaxed bg-white/60 p-8 rounded-3xl shadow-sm border border-pink-100 max-w-xl">
+                        Todo comenzó en la prepa, cuando te acercaste a preguntarme si yo era Mackenzie. Yo, confundida, te pregunté cómo sabías mi nombre y me dijiste que era por tu amigo. Pero la verdad es que lo nuestro empezó de verdad cuando me pediste ser tu novia falsa. Sin darnos cuenta, ese acuerdo tan simple fue el inicio de algo completamente real.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. POEMA BENEDETTI -->
+        <section class="slide bg-grid">
+            <div class="max-w-2xl text-center p-12 bg-white rounded-[50px] shadow-2xl border-2 border-pink-100" style="animation: fadeInUp 1s ease-out;">
+                <h3 class="text-3xl font-titulo text-[#ff5d6c] mb-8 uppercase tracking-widest">Táctica y Estrategia</h3>
+                <p class="text-xl md:text-3xl text-gray-700 leading-relaxed font-semibold italic">
+                    "Mi táctica es mirarte,<br>
+                    aprender como sos, quererte como sos.<br>
+                    Mi táctica es hablarte y escucharte,<br>
+                    construir con palabras un puente indestructible."
+                </p>
+                <div class="mt-8 h-0.5 bg-pink-200 w-1/4 mx-auto mb-4"></div>
+                <p class="text-pink-400 font-titulo text-xl tracking-widest">— MARIO BENEDETTI</p>
+            </div>
+        </section>
+
+        <!-- 4. LÍNEA DEL TIEMPO -->
+        <section class="slide bg-grid">
+            <h2 class="text-4xl md:text-6xl font-titulo text-[#ff5d6c] mb-12 animate-titulo">NUESTRO CAMINO</h2>
+            <div class="relative w-full max-w-6xl px-10 flex items-center justify-center min-h-[450px]">
+                <div class="absolute h-1 bg-pink-300 w-full top-1/2 -translate-y-1/2 rounded-full"></div>
+                
+                <div class="grid grid-cols-4 w-full relative z-10 gap-4">
+                    <div class="timeline-item flex flex-col items-center justify-end h-[400px] pb-[200px]" style="transition-delay: 0.2s;">
+                        <div class="image-placeholder w-32 h-32 md:w-44 md:h-44 mb-4"><span>Foto 13 Jul</span></div>
+                        <div class="bg-white p-3 rounded-xl shadow-md border border-pink-100 text-center max-w-[150px]">
+                            <p class="font-bold text-red-500 text-sm">13 JUL 2023</p>
+                            <p class="text-[9px] text-gray-500 font-semibold mt-1 uppercase">Novios</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item flex flex-col items-center justify-start h-[400px] pt-[200px]" style="transition-delay: 0.8s;">
+                        <div class="bg-white p-3 rounded-xl shadow-md border border-pink-100 text-center max-w-[150px]">
+                            <p class="font-bold text-red-500 text-sm">25 AGO 2023</p>
+                            <p class="text-[9px] text-gray-500 font-semibold mt-1 uppercase">Primer Beso</p>
+                        </div>
+                        <div class="image-placeholder w-32 h-32 md:w-44 md:h-44 mt-4"><span>Foto 25 Ago</span></div>
+                    </div>
+                    <div class="timeline-item flex flex-col items-center justify-end h-[400px] pb-[200px]" style="transition-delay: 1.4s;">
+                        <div class="image-placeholder w-32 h-32 md:w-44 md:h-44 mb-4"><span>Foto Navidad</span></div>
+                        <div class="bg-white p-3 rounded-xl shadow-md border border-pink-100 text-center max-w-[150px]">
+                            <p class="font-bold text-red-500 text-sm">25 DIC 2023</p>
+                            <p class="text-[9px] text-gray-500 font-semibold mt-1 uppercase">Navidad</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item flex flex-col items-center justify-start h-[400px] pt-[200px]" style="transition-delay: 2s;">
+                        <div class="bg-white p-3 rounded-xl shadow-md border border-pink-100 text-center max-w-[150px]">
+                            <p class="font-bold text-red-500 text-sm">06 ABR 2024</p>
+                            <p class="text-[9px] text-gray-500 font-semibold mt-1 uppercase">Viaje QRO</p>
+                        </div>
+                        <div class="image-placeholder w-32 h-32 md:w-44 md:h-44 mt-4"><span>Foto Viaje</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. POEMA NERUDA -->
+        <section class="slide bg-grid overflow-hidden relative">
+            <div id="neruda-hearts-bg" class="absolute inset-0 pointer-events-none opacity-30"></div>
+            <div class="max-w-3xl text-center z-20 p-10 bg-white/80 backdrop-blur-sm rounded-[60px] border-[10px] border-white shadow-2xl !border-dashed" style="animation: fadeInUp 1.5s ease-out;">
+                <p class="text-2xl md:text-5xl font-titulo leading-relaxed text-[#ff5d6c] drop-shadow-sm">
+                    "Te amo sin saber cómo, ni cuándo, ni de dónde,<br>
+                    te amo directamente sin problemas ni orgullo:<br>
+                    así te amo porque no sé amar de otra manera."
+                </p>
+                <div class="h-1 bg-pink-200 w-1/4 mx-auto my-8"></div>
+                <p class="text-gray-400 font-titulo text-2xl uppercase tracking-widest">— PABLO NERUDA</p>
+            </div>
+        </section>
+
+        <!-- 6. TE AMO PORQUE -->
+        <section class="slide bg-grid">
+            <div class="flex flex-col md:flex-row items-center gap-16 max-w-6xl w-full px-8">
+                <div class="md:w-1/3">
+                    <h2 class="text-7xl font-titulo text-[#ff5d6c] animate-titulo">TE AMO <span class="block text-2xl opacity-60 mt-2 uppercase tracking-tighter">Porque eres tú</span></h2>
+                </div>
+                <div class="md:w-2/3 grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="razon-item bg-white p-6 rounded-2xl shadow-lg border-b-4 border-red-300 border-dashed" style="transition-delay: 0.3s;">
+                        <p class="text-lg text-gray-700 font-medium">Siempre has estado para mí, incluso en los momentos difíciles.</p>
+                    </div>
+                    <div class="razon-item bg-white p-6 rounded-2xl shadow-lg border-b-4 border-red-300 border-dashed" style="transition-delay: 0.9s;">
+                        <p class="text-lg text-gray-700 font-medium">Me amas sin condiciones, valorándome por quien soy.</p>
+                    </div>
+                    <div class="razon-item bg-white p-6 rounded-2xl shadow-lg border-b-4 border-red-300 border-dashed" style="transition-delay: 1.5s;">
+                        <p class="text-lg text-gray-700 font-medium">Contigo todo ha sido espontáneo, natural y real.</p>
+                    </div>
+                    <div class="razon-item bg-white p-6 rounded-2xl shadow-lg border-b-4 border-red-300 border-dashed" style="transition-delay: 2.1s;">
+                        <p class="text-lg text-gray-700 font-medium">A pesar de los errores, siempre eliges quedarte y crecer conmigo.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. AGRADECIMIENTO -->
+        <section class="slide bg-grid">
+            <div class="max-w-3xl w-full bg-white p-10 rounded-[50px] shadow-2xl relative border-b-[12px] border-pink-100 border-dashed">
+                <h2 class="text-4xl font-titulo text-[#ff5d6c] mb-6 text-center animate-titulo uppercase tracking-tighter">Gracias por todo</h2>
+                <div class="text-lg md:text-xl text-gray-600 space-y-6 italic text-center leading-relaxed font-medium">
+                    <p>Hoy quiero agradecerte por cada segundo que me has dedicado. Eres el hombre que siempre soñé tener a mi lado.</p>
+                    <p>Gracias por estos 2 años y 7 meses de un amor tan puro. Gracias por ser mi refugio seguro.</p>
+                </div>
+                <div class="mt-8 h-1 bg-pink-100 w-1/4 mx-auto"></div>
+            </div>
+        </section>
+
+        <!-- 8. PREGUNTA FINAL -->
+        <section class="slide bg-grid">
+            <div class="bg-white p-10 md:p-14 rounded-[60px] border-4 border-pink-400 border-dashed text-center shadow-2xl max-w-xl w-full">
+                <h3 class="text-4xl md:text-6xl font-titulo text-[#ff5d6c] mb-10 animate-titulo leading-tight">¿QUIERES SER MI SAN VALENTÍN?</h3>
+                <div class="flex flex-col md:flex-row gap-8 justify-center items-center">
+                    <button onclick="showModal()" class="bg-[#ff5d6c] text-white px-12 py-4 rounded-full font-titulo text-3xl shadow-xl hover:scale-110 transition active:scale-95">SÍ</button>
+                    <button id="btn-no" onclick="handleNoClick()" class="bg-gray-100 text-gray-400 border px-12 py-3 rounded-full font-titulo text-2xl shadow-md transition-all duration-300">NO</button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- MODAL FINAL -->
+    <div id="modal-love" class="modal-overlay fixed inset-0 items-center justify-center p-6">
+        <div class="bg-white rounded-[50px] max-w-sm w-full p-10 text-center shadow-2xl border-4 border-pink-200 !border-dashed">
+            <div class="w-full aspect-square image-placeholder mb-8 border-dashed border-2">
+                <span class="p-4 text-center font-semibold text-pink-300 italic">Vuestra mejor foto ❤️</span>
+            </div>
+            <h2 class="text-3xl font-titulo text-[#ff5d6c] mb-4 uppercase">¡SABÍA QUE SÍ!</h2>
+            <p class="text-gray-600 text-lg leading-relaxed font-medium">Te amo infinito mi vida.</p>
+            <button onclick="closeModal()" class="mt-8 text-pink-400 font-titulo text-xl hover:scale-105 transition block w-full">TE AMO MI AMOR</button>
+        </div>
+    </div>
+
+    <script>
+        let audioCtx, mainGain, musicInterval;
+        let currentSlide = 0;
+        let slideElements = [];
+        let noClickCount = 0;
+        let heartInterval, nerudaInterval;
+
+        // --- MOTOR DE AUDIO ---
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                mainGain = audioCtx.createGain();
+                mainGain.gain.value = 0.15;
+                mainGain.connect(audioCtx.destination);
+            }
+        }
+
+        const pianoNotes = [261.63, 329.63, 392.00, 440.00, 523.25, 659.25];
+
+        function playPiano() {
+            const now = audioCtx.currentTime;
+            const freq = pianoNotes[Math.floor(Math.random() * pianoNotes.length)];
+            const osc = audioCtx.createOscillator();
+            const g = audioCtx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(freq, now);
+            g.gain.setValueAtTime(0, now);
+            g.gain.linearRampToValueAtTime(0.2, now + 0.1);
+            g.gain.exponentialRampToValueAtTime(0.001, now + 4);
+            osc.connect(g);
+            g.connect(mainGain);
+            osc.start(now);
+            osc.stop(now + 4);
+        }
+
+        // --- INICIO DE EXPERIENCIA ---
+        function startExperience() {
+            initAudio();
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            
+            document.getElementById('start-overlay').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('start-overlay').style.display = 'none';
+                initSlider();
+                musicInterval = setInterval(playPiano, 1500);
+            }, 1000);
+        }
+
+        // --- LÓGICA DE SLIDES Y ANIMACIONES ---
+        function initSlider() {
+            slideElements = document.querySelectorAll('.slide');
+            showSlide(0);
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowRight' || e.key === ' ') nextSlide();
+                if (e.key === 'ArrowLeft') prevSlide();
+            });
+        }
+
+        function showSlide(index) {
+            slideElements.forEach((s, i) => s.classList.toggle('active', i === index));
+            clearInterval(heartInterval);
+            const isPortada = index === 0;
+            heartInterval = setInterval(() => createHeart(isPortada), isPortada ? 350 : 500);
+            if(index === 4) startNerudaHearts(); else stopNerudaHearts();
+        }
+
+        function nextSlide() { currentSlide = (currentSlide + 1) % slideElements.length; showSlide(currentSlide); }
+        function prevSlide() { currentSlide = (currentSlide - 1 + slideElements.length) % slideElements.length; showSlide(currentSlide); }
+
+        function createHeart(isFalling) {
+            const container = document.getElementById('hearts-container');
+            const heart = document.createElement('div');
+            heart.className = isFalling ? 'heart-fall' : 'heart-float';
+            heart.innerHTML = '❤️';
+            const size = Math.random() * 15 + 12;
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.fontSize = size + 'px';
+            heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
+            if (!isFalling) heart.style.bottom = '-5vh';
+            container.appendChild(heart);
+            setTimeout(() => heart.remove(), 8000);
+        }
+
+        function startNerudaHearts() {
+            const bg = document.getElementById('neruda-hearts-bg');
+            nerudaInterval = setInterval(() => {
+                const h = document.createElement('div');
+                h.className = 'heart-float';
+                h.innerHTML = '❤️';
+                h.style.left = Math.random() * 100 + 'vw';
+                h.style.color = 'white';
+                h.style.animationDuration = '5s';
+                bg.appendChild(h);
+                setTimeout(() => h.remove(), 5000);
+            }, 300);
+        }
+
+        function stopNerudaHearts() {
+            clearInterval(nerudaInterval);
+            if(document.getElementById('neruda-hearts-bg')) document.getElementById('neruda-hearts-bg').innerHTML = '';
+        }
+
+        function handleNoClick() {
+            noClickCount++;
+            const btn = document.getElementById('btn-no');
+            if (noClickCount === 1) { btn.style.transform = `scale(0.8)`; btn.style.opacity = '0.7'; }
+            else if (noClickCount === 2) { btn.style.transform = `scale(0.5)`; btn.style.opacity = '0.4'; }
+            else { btn.style.visibility = 'hidden'; }
+        }
+
+        function showModal() {
+            document.getElementById('modal-love').classList.add('active');
+            for(let i=0; i<40; i++) setTimeout(() => createHeart(false), i*50);
+        }
+
+        function closeModal() { document.getElementById('modal-love').classList.remove('active'); }
+    </script>
+</body>
+</html>
