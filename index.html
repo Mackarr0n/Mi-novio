@@ -124,11 +124,12 @@
             <p class="mt-12 text-pink-400 font-semibold animate-bounce italic">Para el hombre de mi vida ❤️</p>
         </section>
 
-        <!-- 2. DONDE TODO COMENZÓ -->
+        <!-- 2. DONDE TODO COMENZÓ (Adaptado para captura 1220x2712) -->
         <section class="slide bg-grid">
             <div class="flex flex-col md:flex-row items-center justify-center gap-10 max-w-6xl w-full px-6">
-                <div class="w-64 md:w-80 aspect-[3/4] image-placeholder border-[10px] border-white flex-shrink-0 shadow-xl !border-dashed">
-                    <span class="text-center p-4">Foto de la Prepa</span>
+                <!-- Ajuste de proporción: aspect-[1220/2712] para que se vea completa y alta -->
+                <div class="w-48 md:w-64 aspect-[1220/2712] image-placeholder border-[10px] border-white flex-shrink-0 shadow-xl !border-dashed max-h-[70vh]">
+                    <img src="6.jpg" alt="Foto de la Prepa" class="w-full h-full object-contain" onerror="this.parentElement.innerHTML='<span>Foto de la Prepa</span>'">
                 </div>
                 <div class="text-center md:text-left">
                     <h2 class="text-4xl md:text-6xl font-titulo text-[#ff5d6c] mb-6 animate-titulo uppercase italic">Donde todo comenzó</h2>
@@ -162,7 +163,9 @@
                 
                 <div class="grid grid-cols-4 w-full relative z-10 gap-4">
                     <div class="timeline-item flex flex-col items-center justify-end h-[400px] pb-[200px]" style="transition-delay: 0.2s;">
-                        <div class="image-placeholder w-32 h-32 md:w-44 md:h-44 mb-4"><span>Foto 13 Jul</span></div>
+                        <div class="image-placeholder w-32 h-32 md:w-44 md:h-44 mb-4">
+                            <img src="7.jpg" alt="13 Jul" class="w-full h-full object-cover" onerror="this.parentElement.innerHTML='<span>Foto 13 Jul</span>'">
+                        </div>
                         <div class="bg-white p-3 rounded-xl shadow-md border border-pink-100 text-center max-w-[150px]">
                             <p class="font-bold text-red-500 text-sm">13 JUL 2023</p>
                             <p class="text-[9px] text-gray-500 font-semibold mt-1 uppercase">Novios</p>
@@ -173,10 +176,14 @@
                             <p class="font-bold text-red-500 text-sm">25 AGO 2023</p>
                             <p class="text-[9px] text-gray-500 font-semibold mt-1 uppercase">Primer Beso</p>
                         </div>
-                        <div class="image-placeholder w-32 h-32 md:w-44 md:h-44 mt-4"><span>Foto 25 Ago</span></div>
+                        <div class="image-placeholder w-32 h-32 md:w-44 md:h-44 mt-4">
+                            <img src="1.jpg" alt="25 Ago" class="w-full h-full object-cover" onerror="this.parentElement.innerHTML='<span>Foto 25 Ago</span>'">
+                        </div>
                     </div>
                     <div class="timeline-item flex flex-col items-center justify-end h-[400px] pb-[200px]" style="transition-delay: 1.4s;">
-                        <div class="image-placeholder w-32 h-32 md:w-44 md:h-44 mb-4"><span>Foto Navidad</span></div>
+                        <div class="image-placeholder w-32 h-32 md:w-44 md:h-44 mb-4">
+                            <img src="8.jpg" alt="Navidad" class="w-full h-full object-cover" onerror="this.parentElement.innerHTML='<span>Foto Navidad</span>'">
+                        </div>
                         <div class="bg-white p-3 rounded-xl shadow-md border border-pink-100 text-center max-w-[150px]">
                             <p class="font-bold text-red-500 text-sm">25 DIC 2023</p>
                             <p class="text-[9px] text-gray-500 font-semibold mt-1 uppercase">Navidad</p>
@@ -187,7 +194,9 @@
                             <p class="font-bold text-red-500 text-sm">06 ABR 2024</p>
                             <p class="text-[9px] text-gray-500 font-semibold mt-1 uppercase">Viaje QRO</p>
                         </div>
-                        <div class="image-placeholder w-32 h-32 md:w-44 md:h-44 mt-4"><span>Foto Viaje</span></div>
+                        <div class="image-placeholder w-32 h-32 md:w-44 md:h-44 mt-4">
+                            <img src="3.jpg" alt="Viaje" class="w-full h-full object-cover" onerror="this.parentElement.innerHTML='<span>Foto Viaje</span>'">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -258,7 +267,6 @@
     <div id="modal-love" class="modal-overlay fixed inset-0 items-center justify-center p-6">
         <div class="bg-white rounded-[50px] max-w-sm w-full p-10 text-center shadow-2xl border-4 border-pink-200 !border-dashed">
             <div class="w-full aspect-square image-placeholder mb-8 border-dashed border-2">
-                <span class="p-4 text-center font-semibold text-pink-300 italic">Vuestra mejor foto ❤️</span>
             </div>
             <h2 class="text-3xl font-titulo text-[#ff5d6c] mb-4 uppercase">¡SABÍA QUE SÍ!</h2>
             <p class="text-gray-600 text-lg leading-relaxed font-medium">Te amo infinito mi vida.</p>
