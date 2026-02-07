@@ -220,7 +220,7 @@
         <section class="slide bg-grid">
             <div class="flex flex-col md:flex-row items-center gap-16 max-w-6xl w-full px-8">
                 <div class="md:w-1/3">
-                    <h2 class="text-7xl font-titulo text-[#ff5d6c] animate-titulo">TE AMO <span class="block text-2xl opacity-60 mt-2 uppercase tracking-tighter">Porque eres tú</span></h2>
+                    <h2 class="text-7xl font-titulo text-[#ff5d6c] animate-titulo">TE AMO <span class="block text-2xl opacity-60 mt-2 uppercase tracking-tighter">Porque...</span></h2>
                 </div>
                 <div class="md:w-2/3 grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="razon-item bg-white p-6 rounded-2xl shadow-lg border-b-4 border-red-300 border-dashed" style="transition-delay: 0.3s;">
@@ -246,6 +246,7 @@
                 <div class="text-lg md:text-xl text-gray-600 space-y-6 italic text-center leading-relaxed font-medium">
                     <p>Hoy quiero agradecerte por cada segundo que me has dedicado. Eres el hombre que siempre soñé tener a mi lado.</p>
                     <p>Gracias por estos 2 años y 7 meses de un amor tan puro. Gracias por ser mi refugio seguro.</p>
+                    <p>Te amo muchisimo amorcin</p>
                 </div>
                 <div class="mt-8 h-1 bg-pink-100 w-1/4 mx-auto"></div>
             </div>
@@ -264,15 +265,21 @@
     </div>
 
     <!-- MODAL FINAL -->
-    <div id="modal-love" class="modal-overlay fixed inset-0 items-center justify-center p-6">
-        <div class="bg-white rounded-[50px] max-w-sm w-full p-10 text-center shadow-2xl border-4 border-pink-200 !border-dashed">
-            <div class="w-full aspect-square image-placeholder mb-8 border-dashed border-2">
-            </div>
-            <h2 class="text-3xl font-titulo text-[#ff5d6c] mb-4 uppercase">¡SABÍA QUE SÍ!</h2>
-            <p class="text-gray-600 text-lg leading-relaxed font-medium">Te amo infinito mi vida.</p>
-            <button onclick="closeModal()" class="mt-8 text-pink-400 font-titulo text-xl hover:scale-105 transition block w-full">TE AMO MI AMOR</button>
+ <div id="modal-love" class="modal-overlay fixed inset-0 items-center justify-center p-6">
+    <div class="bg-white rounded-[50px] max-w-sm w-full p-10 text-center shadow-2xl border-4 border-pink-200 !border-dashed">
+        
+        <div class="w-full aspect-square mb-8 overflow-hidden rounded-[30px] border-dashed border-2 border-pink-100">
+            <img src="4.jpg" alt="Nuestro amor" class="w-full h-full object-cover">
         </div>
+
+        <h2 class="text-3xl font-titulo text-[#ff5d6c] mb-4 uppercase">¡SABÍA QUE SÍ!</h2>
+        <p class="text-gray-600 text-lg leading-relaxed font-medium">Gracias por todo lo vivido mi amor. Te amo <3</p>
+        
+        <button onclick="closeModal()" class="mt-8 text-pink-400 font-titulo text-xl hover:scale-105 transition block w-full">
+            TE AMO MI AMOR
+        </button>
     </div>
+</div>
 
     <script>
         let audioCtx, mainGain, musicInterval;
@@ -393,3 +400,4 @@
     </script>
 </body>
 </html>
+
